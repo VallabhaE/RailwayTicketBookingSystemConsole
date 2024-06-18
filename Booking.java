@@ -1,6 +1,8 @@
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 public class Booking {
     int Boxes = 1;
     box[] data;
@@ -119,7 +121,7 @@ public class Booking {
             for(Person p :d.seatsOccupied){
                 if(p.tktId == PNR){
                     System.out.println("name: "+p.name+"Age:"+p.age+"Seatnumber - Pos"+p.seatNumber+"-"+p.seatingpos);
-                    break;
+                    return;
                 }
             }
             
@@ -130,18 +132,25 @@ public class Booking {
 
 
 
-    void CancelTicket(int PNR){
+    void CancelTicket(int PNR) {
         boolean removed = false;
-        for(int i=0;i<data.length;i++){
+    
+        outerLoop:
+        for(int i = 0; i < data.length; i++) {
             for(Person p : data[i].seatsOccupied){
-                if(p.tktId == PNR) {
+                if (p.tktId == PNR) {
                     data[i].seatsOccupied.remove(p);
                     removed = true;
-                    break;
+                    break outerLoop;
                 }
             }
         }
-
-        removed == true: System.out.println("This seat is not found with the PNR number Please check it")?System.out.println("Sucessfully Deleted");;
+    
+        if (removed) {
+            System.out.println("Successfully Deleted");
+        } else {
+            System.out.println("This seat is not found with the PNR number. Please check it");
+        }
     }
+    
 }
